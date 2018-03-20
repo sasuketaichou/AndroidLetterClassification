@@ -12,7 +12,7 @@ To generate pb file take a look at Python folder
 
 First, download letter dataset from http://yaroslavvb.com/upload/notMNIST/notMNIST_small.tar.gz
 
-next, extract and put dataset inside "notMNIST_small" folder
+next, extract and put dataset inside "notMNIST_small" folder or you can change folder destination inside LetterDataset.py
 
 then, run cnn - letter.py, it will generate "out" folder, u only need "optimized_letter_convnet.pb" file
 
