@@ -12,36 +12,9 @@ from six.moves import urllib
 
 class LetterDataset:
     def __init__(self):
-        
-        #download
-        def maybe_download_and_extract():
-
-            destination_dir = 'dataset'
-            URL = ' http://yaroslavvb.com/upload/notMNIST/notMNIST_small.tar.gz'
-
-            if not os.path.exists(destination_dir):
-                os.makedirs(destination_dir)
-
-            filename = URL.split('/')[-1]
-            filepath = os.path.join(destination_dir, filename)
-        
-            if not os.path.exists(filepath):
-                def _progress(count, block_size, total_size):
-                    sys.stdout.write('\r>> Downloading %s %.1f%%' % (filename,float(count * block_size) / float(total_size) * 100.0))
-                    sys.stdout.flush()
-                    
-                filepath, _ = urllib.request.urlretrieve(URL, filepath, _progress)
-                print()
-                statinfo = os.stat(filepath)
-                print('Successfully downloaded', filename, statinfo.st_size, 'bytes.')
-            
-            extracted_dir = os.path.join(destination_dir, 'notMNIST_small')
-            
-            if not os.path.exists(extracted_dir):
-                tarfile.open(filepath, 'r:gz').extractall(destination_dir)
 
         #trigger
-        maybe_download_and_extract()       
+        self.maybe_download_and_extract()       
         images, labels = [], []
 
         for i, letter in enumerate(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']):
@@ -95,3 +68,30 @@ class LetterDataset:
         self.train.labels = train_labels
         self.test.images = test_images
         self.test.labels = test_labels
+
+    #download
+    def maybe_download_and_extract(self):
+
+        destination_dir = 'dataset'
+        URL = ' http://yaroslavvb.com/upload/notMNIST/notMNIST_small.tar.gz'
+
+        if not os.path.exists(destination_dir):
+            os.makedirs(destination_dir)
+
+        filename = URL.split('/')[-1]
+        filepath = os.path.join(destination_dir, filename)
+    
+        if not os.path.exists(filepath):
+            def _progress(count, block_size, total_size):
+                sys.stdout.write('\r>> Downloading %s %.1f%%' % (filename,float(count * block_size) / float(total_size) * 100.0))
+                sys.stdout.flush()
+                
+            filepath, _ = urllib.request.urlretrieve(URL, filepath, _progress)
+            print()
+            statinfo = os.stat(filepath)
+            print('Successfully downloaded', filename, statinfo.st_size, 'bytes.')
+        
+        extracted_dir = os.path.join(destination_dir, 'notMNIST_small')
+        
+        if not os.path.exists(extracted_dir):
+            tarfile.open(filepath, 'r:gz').extractall(destination_dir)
